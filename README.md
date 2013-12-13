@@ -1,4 +1,5 @@
-Using Intel’s Secure Key (RDRAND) in MS Visual C++ 2010:
+Using Intel’s Secure Key (RDRAND) in MS Visual C++ 2010
+-------------------------------------------------------
 
 Among the features added to Intel’s 3rd-Generation Core i* processors is a Digital Random Number Generator (DRNG) backed by an on-die hardware entropy source. This new hardware feature is made available to software via the also-new RDRAND instruction.
 
