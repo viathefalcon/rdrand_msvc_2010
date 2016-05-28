@@ -39,7 +39,15 @@ int main(int argc, const char* argv[]) {
 				printf( "RDRAND did not return a value.\n" );
 			}
 		}
-		printf( "Generated %u random numbers.", counter );
+		printf( "Generated %u random numbers.\r", counter );
+
+		for (unsigned u = 0; u < iterations; u++){
+			const unsigned r = rdrand_uniform( iterations );
+			printf( "%u) Generated %u with bound of %u\n", u, r, iterations );
+			if (r >= iterations){
+				break;
+			}
+		}
 	}else{
 		printf( "RDRAND is not supported on this host." );
 	}
