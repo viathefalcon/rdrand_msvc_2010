@@ -12,6 +12,3 @@
 
 // Microsoft-specific Intrinsics Headers
 #include <intrin.h>
-
-// C Standard Library Headers
-#include <string.h>

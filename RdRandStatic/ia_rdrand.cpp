@@ -36,15 +36,25 @@
 // Functions
 //
 
+// Packs the four characters in the given buffer into an integer and compares with the comparand;
+// returns 0 if equal; 1 if not.
+//
+// Could do this with memcmp, of course, but don't want to link in the C/C++ runtime.
+inline int packcmp(int comparand, __in_bcount(4) const char* buffer) {
+
+	const int packed = *((int*) buffer);
+	return (packed == comparand) ? 0 : 1;
+}
+
 // Queries CPUID to see if the RDRAND instruction is supported
 bool rdrand_cpuid(void) {
 
 	// Check if we are on Intel hardware
 	int info[4] = { -1, -1, -1, -1 };
 	__cpuid( info, 0 );
-	if (memcmp( (const void *) &info[1], (const void *) "Genu", 4 ) != 0 ||
-		memcmp( (const void *) &info[3], (const void *) "ineI", 4 ) != 0 ||
-		memcmp( (const void *) &info[2], (const void *) "ntel", 4 ) != 0 ){
+	if (packcmp( info[1], "Genu" ) != 0 ||
+		packcmp( info[3], "ineI" ) != 0 ||
+		packcmp( info[2], "ntel" ) != 0 ){
 		return false;
 	}
 
