@@ -1,7 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RdRand", "RdRand\RdRand.vcxproj", "{1468D2FE-31D2-46E2-9AA8-DAB3F24B211B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4} = {C227784D-C91E-4172-A208-E6E28E9E7DB4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RdRandStatic", "RdRandStatic\RdRandStatic.vcxproj", "{C227784D-C91E-4172-A208-E6E28E9E7DB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +25,14 @@ Global
 		{1468D2FE-31D2-46E2-9AA8-DAB3F24B211B}.Release|Win32.Build.0 = Release|Win32
 		{1468D2FE-31D2-46E2-9AA8-DAB3F24B211B}.Release|x64.ActiveCfg = Release|x64
 		{1468D2FE-31D2-46E2-9AA8-DAB3F24B211B}.Release|x64.Build.0 = Release|x64
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Debug|Win32.Build.0 = Debug|Win32
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Debug|x64.ActiveCfg = Debug|x64
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Debug|x64.Build.0 = Debug|x64
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Release|Win32.ActiveCfg = Release|Win32
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Release|Win32.Build.0 = Release|Win32
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Release|x64.ActiveCfg = Release|x64
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

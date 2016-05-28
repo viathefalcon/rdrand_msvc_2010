@@ -5,7 +5,7 @@
 ; Although this is 64-bit code, we refer to EAX rather than
 ; RAX, because the output is still a 32-bit value
 ;
-; Author: Stephen Higgins <sjh@viathefalcon.net>
+; Author: Stephen Higgins
 ; Blog: http://blog.viathefalcon.net/
 ; Twitter: @viathefalcon
 ;

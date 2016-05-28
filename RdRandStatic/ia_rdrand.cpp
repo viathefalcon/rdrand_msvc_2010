@@ -1,6 +1,6 @@
 // ia_rdrand.cpp: Implements the functions for working with the RDRAND instruction on (certain) Intel processors.
 //
-// Author: Stephen Higgins <sjh@viathefalcon.net>
+// Author: Stephen Higgins
 // Blog: http://blog.viathefalcon.net/
 // Twitter: @viathefalcon
 //
@@ -8,11 +8,8 @@
 // Includes
 //
 
-// Microsoft-specific Intrinsics Headers
-#include <intrin.h>
-
-// C Standard Library Headers
-#include <string.h>
+// Precompiled Headers
+#include "Stdafx.h"
 
 // Declarations
 #include "ia_rdrand.h"

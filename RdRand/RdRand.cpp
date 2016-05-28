@@ -1,6 +1,6 @@
 // RdRand.cpp: Defines the entry-point for the application.
 //
-// Author: Stephen Higgins <sjh@viathefalcon.net>
+// Author: Stephen Higgins
 // Blog: http://blog.viathefalcon.net/
 // Twitter: @viathefalcon
 //
