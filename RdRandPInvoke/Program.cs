@@ -16,18 +16,21 @@ namespace RdRandPInvoke
                 Console.WriteLine("Usage: {0} [number of random numbers to generate]", System.AppDomain.CurrentDomain.FriendlyName);
                 UInt32 iterations = (args.Length > 0) ? UInt32.Parse(args[0]) : 32;
 
+                UInt32 counter = 0;
                 for (UInt32 u = 0; u < iterations; u++)
                 {
                     UInt32 value = 0;
                     if (rdrand_next(ref value))
                     {
                         Console.WriteLine("RDRAND returned: {0}", value);
+                        counter++;
                     }
                     else
                     {
                         Console.WriteLine("RDRAND did not return a value.");
                     }
                 }
+                Console.WriteLine("Generated {0} random numbers.", counter);
 
                 for (UInt32 bound = iterations, u = 0; u < bound; u++)
                 {
