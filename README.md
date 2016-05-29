@@ -9,4 +9,4 @@ This project demonstrates testing whether the host processor supports the RDRAND
 
 For the most part, the project simply follows the Software Implementation Guide from Intel. Additionally, it demonstrates invoking the instruction via its opcode, and linking a module implemented in assembly into a VC++ project.
 
-**UPDATE (29/05/2016):** refactored the logic into a static library and wrapped it with a dynamic library for use with P/Invoke.
+**UPDATE (29/05/2016):** added a function to use RDRAND to generate a random value within a specified range, and refactored the logic into a static library and wrapped it with a dynamic library for use with P/Invoke.
