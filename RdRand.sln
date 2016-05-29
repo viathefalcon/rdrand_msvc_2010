@@ -4,10 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RdRand", "RdRand\RdRand.vcxproj", "{1468D2FE-31D2-46E2-9AA8-DAB3F24B211B}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C227784D-C91E-4172-A208-E6E28E9E7DB4} = {C227784D-C91E-4172-A208-E6E28E9E7DB4}
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3} = {043C26C6-9D17-4EC4-9600-EE1743D1D2A3}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RdRandStatic", "RdRandStatic\RdRandStatic.vcxproj", "{C227784D-C91E-4172-A208-E6E28E9E7DB4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RdRandDynamic", "RdRandDynamic\RdRandDynamic.vcxproj", "{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C227784D-C91E-4172-A208-E6E28E9E7DB4} = {C227784D-C91E-4172-A208-E6E28E9E7DB4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +38,14 @@ Global
 		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Release|Win32.Build.0 = Release|Win32
 		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Release|x64.ActiveCfg = Release|x64
 		{C227784D-C91E-4172-A208-E6E28E9E7DB4}.Release|x64.Build.0 = Release|x64
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Debug|Win32.Build.0 = Debug|Win32
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Debug|x64.ActiveCfg = Debug|x64
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Debug|x64.Build.0 = Debug|x64
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Release|Win32.ActiveCfg = Release|Win32
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Release|Win32.Build.0 = Release|Win32
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Release|x64.ActiveCfg = Release|x64
+		{043C26C6-9D17-4EC4-9600-EE1743D1D2A3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

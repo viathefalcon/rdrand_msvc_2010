@@ -1,0 +1,5 @@
+LIBRARY RDRAND
+EXPORTS
+ rdrand_supported @1
+ rdrandx64 @2
+ rdrandx64_uniform @3

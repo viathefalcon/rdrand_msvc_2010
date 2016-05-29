@@ -66,7 +66,7 @@ bool rdrand_cpuid(void) {
 	return ((info[2] & RDRAND_MASK) == RDRAND_MASK); // info[2] == ecx
 }
 
-bool rdrand_supported(void) {
+bool RDRAND_CALLTYPE rdrand_supported(void) {
 
 	// Caching the result is cheaper than re-invoking cpuid
 	static unsigned supported = RDRAND_SUPPORT_UNKNOWN;
@@ -77,7 +77,7 @@ bool rdrand_supported(void) {
 }
 
 #ifndef _WIN64
-bool rdrand(__deref_out unsigned* dest) {
+bool RDRAND_CALLTYPE rdrand(__deref_out unsigned* dest) {
 
 	__asm {
 		xor eax, eax		; Indicate to VC++ that we'll be using EAX, EDX
@@ -101,7 +101,7 @@ bool rdrand(__deref_out unsigned* dest) {
 	;
 }
 
-unsigned rdrand_uniform(__in unsigned bound) {
+unsigned RDRAND_CALLTYPE rdrand_uniform(__in unsigned bound) {
 
 	unsigned value = 0, result = 0;
 	__asm {

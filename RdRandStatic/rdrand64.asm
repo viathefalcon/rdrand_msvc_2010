@@ -1,17 +1,15 @@
 ; rdrand64.asm provides 64-bit assembly implementations of functions which invoke RDRAND
 ; suitable for assembly with 64-bit MASM (ML64.EXE)
 ;
-; Although this is 64-bit code, we refer to EAX rather than
-; RAX, because the output is still a 32-bit value
-;
 ; Author: Stephen Higgins
 ; Blog: http://blog.viathefalcon.net/
 ; Twitter: @viathefalcon
 ;
 
-PUBLIC rdrandx64
+PUBLIC rdrandx64, rdrandx64_uniform
 .CODE
 	ALIGN 8
+
 rdrandx64 PROC FRAME
 ; bool rdrandx64(__deref_out unsigned* dest)
 ; ecx <= dest
@@ -26,11 +24,9 @@ rdrandx64 PROC FRAME
 rdrand_err:
 	mov eax, 0			; Set false into EAX
 	ret					; Return with result in EAX
-
-	ALIGN 8
 rdrandx64 ENDP
 
-rdrandx64_uniform PROC PUBLIC FRAME
+rdrandx64_uniform PROC FRAME
 ; unsigned rdrandx64_uniform(__in unsigned bound)
 ; rcx = bound
 	push rbp
@@ -72,8 +68,6 @@ epilogue:
 	add rsp, 08h
 	pop rbp
 	ret
-
-	ALIGN 8
 rdrandx64_uniform ENDP
 END
 
