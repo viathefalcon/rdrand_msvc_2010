@@ -14,7 +14,7 @@
 #include <stdlib.h>
 
 // Library Headers
-#include "RdRand.h"
+#include "ia_rdrand.h"
 
 // Macros
 //
