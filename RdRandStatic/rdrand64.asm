@@ -55,17 +55,17 @@ rdrand_ok:
 	mov rax, 0FFFFFFFFh		; The maximum value returnable by RDRAND (32-bit)
 	mov [rsp], rax
 	fild qword ptr [rsp]
-	fdiv					; Divide to obtain the scaling factor
+	fdivp					; Divide to obtain the scaling factor
 
 	; Multiply by the bound
 	dec rcx					; Decrement the bound such that the result never exceeds it
 							; (and to spare us faffing about with the rounding mode)
 	mov [rsp], rcx
 	fild qword ptr [rsp]
-	fmul
+	fmulp
 
 	; Get out the result
-	fist dword ptr [rsp]
+	fistp dword ptr [rsp]
 	mov eax, dword ptr [rsp]
 
 epilogue:
