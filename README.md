@@ -8,3 +8,5 @@ If you’re still using the compiler which shipped with Visual C++ 2010, it seem
 This project demonstrates testing whether the host processor supports the RDRAND instruction as well as invoking it (via assembly). When built for 32-bit CPUs, the assembly is inlined; when built for 64-bit CPUs, the assembly is linked in via an exernal module (the 64-bit compiler in Visual Studio 2010 does not support inline assembly).
 
 For the most part, the project simply follows the Software Implementation Guide from Intel. Additionally, it demonstrates invoking the instruction via its opcode, and linking a module implemented in assembly into a VC++ project.
+
+**UPDATE (29/05/2016):** refactored the logic into a static library and wrapped it with a dynamic library for use with P/Invoke.
