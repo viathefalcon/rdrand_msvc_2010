@@ -37,7 +37,7 @@ int main(int argc, const char* argv[]) {
 		uint32_t counter = 0;
 		for( uint32_t u = 0; u < iterations; u++ ){
 			uint32_t value = 0;
-			if (rdrand( &value )){
+			if (rdrand_next( &value )){
 				println( "RDRAND returned: %u", value );
 				counter++;
 			}else{
@@ -57,5 +57,5 @@ int main(int argc, const char* argv[]) {
 	}else{
 		println( "RDRAND is not supported on this host." );
 	}
-	return 2;
+	return 0;
 }

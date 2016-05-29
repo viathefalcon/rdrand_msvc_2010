@@ -6,12 +6,12 @@
 ; Twitter: @viathefalcon
 ;
 
-PUBLIC rdrandx64, rdrandx64_uniform
+PUBLIC rdrand_next, rdrand_uniform
 .CODE
 	ALIGN 8
 
-rdrandx64 PROC FRAME
-; bool rdrandx64(__deref_out unsigned* dest)
+rdrand_next PROC FRAME
+; bool rdrand_next(__deref_out unsigned* dest)
 ; ecx <= dest
 	.endprolog
 
@@ -24,10 +24,10 @@ rdrandx64 PROC FRAME
 rdrand_err:
 	mov eax, 0			; Set false into EAX
 	ret					; Return with result in EAX
-rdrandx64 ENDP
+rdrand_next ENDP
 
-rdrandx64_uniform PROC FRAME
-; unsigned rdrandx64_uniform(__in unsigned bound)
+rdrand_uniform PROC FRAME
+; unsigned rdrand_uniform(__in unsigned bound)
 ; rcx = bound
 	push rbp
 	.pushreg rbp
@@ -68,7 +68,7 @@ epilogue:
 	add rsp, 08h
 	pop rbp
 	ret
-rdrandx64_uniform ENDP
+rdrand_uniform ENDP
 END
 
 ; [1] Because we don't specify a REX prefix, the instruction's output is 32-bit

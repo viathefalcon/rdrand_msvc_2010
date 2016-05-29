@@ -1,5 +1,5 @@
-LIBRARY RDRAND
+LIBRARY RDRANDLIB
 EXPORTS
  rdrand_supported @1
- rdrand @2
+ rdrand_next @2
  rdrand_uniform @3

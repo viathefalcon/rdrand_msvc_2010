@@ -32,26 +32,12 @@ RDRAND_API bool RDRAND_CALLTYPE rdrand_supported(void);
 
 // Invokes RDRAND to generate a 32-bit unsigned random number
 // Returns true if a random value was available; false otherwise
-#ifdef _WIN64
-RDRAND_API bool RDRAND_CALLTYPE rdrandx64(__deref_out uint32_ptr);
-
-// Map rdrand to the name of the function exported from the assembled module
-#define rdrand rdrandx64
-#else
-RDRAND_API bool RDRAND_CALLTYPE rdrand(__deref_out uint32_ptr);
-#endif
+RDRAND_API bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_ptr);
 
 // Invokes RDRAND to generate a 32-bit unsigned random number,
 // and bounds it uniformly to the range 0 <= value < bound.
 //
 // If no random value is available, returns the bound.
-#ifdef _WIN64
-RDRAND_API uint32_t RDRAND_CALLTYPE rdrandx64_uniform(__in uint32_t);
-
-// Map rdrand_uniform to the name of the function exported from the assembled module
-#define rdrand_uniform rdrandx64_uniform
-#else
 RDRAND_API unsigned RDRAND_CALLTYPE rdrand_uniform(__in unsigned);
-#endif // _WIN64
 
 } // extern "C"

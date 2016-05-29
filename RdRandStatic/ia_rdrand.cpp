@@ -77,7 +77,7 @@ bool RDRAND_CALLTYPE rdrand_supported(void) {
 }
 
 #ifndef _WIN64
-bool RDRAND_CALLTYPE rdrand(__deref_out unsigned* dest) {
+bool RDRAND_CALLTYPE rdrand_next(__deref_out unsigned* dest) {
 
 	__asm {
 		xor eax, eax		; Indicate to VC++ that we'll be using EAX, EDX

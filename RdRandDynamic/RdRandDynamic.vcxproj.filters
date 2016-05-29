@@ -34,10 +34,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="RdRand32.def">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="RdRand64.def">
+    <None Include="RdRand.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
