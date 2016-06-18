@@ -47,7 +47,7 @@ int main(int argc, const char* argv[]) {
 		println( "Generated %u random numbers.", counter );
 
 		for (uint32_t bound = iterations, u = 0; u < bound; u++){
-			const uint32_t r = rdrand_uniform( bound );
+			const uint32_t r = (uint32_t) rdrand_uniform( bound );
 			if (r >= bound){
 				println( "%u) Generated a value (%u) equal to or greater than the bound (%u)!?", u, r, bound );
 				break;

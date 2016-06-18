@@ -77,7 +77,7 @@ bool RDRAND_CALLTYPE rdrand_supported(void) {
 }
 
 #ifndef _WIN64
-bool RDRAND_CALLTYPE rdrand_next(__deref_out unsigned* dest) {
+bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_t* dest) {
 
 	__asm {
 		xor eax, eax		; Indicate to VC++ that we'll be using EAX, EDX
@@ -101,18 +101,16 @@ bool RDRAND_CALLTYPE rdrand_next(__deref_out unsigned* dest) {
 	;
 }
 
-unsigned RDRAND_CALLTYPE rdrand_uniform(__in unsigned bound) {
+uint32_t RDRAND_CALLTYPE rdrand_uniform_ex(__in uint32_t lower, __in uint32_t upper) {
 
-	unsigned value = 0, result = 0;
+	uint32_t value = 0, result = 0;
 	__asm {
 		xor eax, eax		; Indicate to VC++ that we'll be using EAX
 
 		rdrand_eax			; Get the random value into EAX
-		jc rdrand_rslt		; If a value was available, jump down
-		jmp rdrand_ret		; Jump over the next bit
+		jnc rdrand_ret		; No value available; jump over the next bit
 
-	rdrand_rslt:
-		mov value, eax		; Move the random value from EAX into the destination address (now in EDX)
+		mov value, eax		; Move the random value from EAX into the destination address
 		mov result, 1		; Set the result (true)
 
 	rdrand_ret:
@@ -121,10 +119,10 @@ unsigned RDRAND_CALLTYPE rdrand_uniform(__in unsigned bound) {
 
 	// Look for an early out
 	if (result == 0){
-		return bound;
+		return upper;
 	}
 	const float scale = ((float) value) /  RDRAND_MAX_FLOAT;
-	const float scaled = ((float) bound) * scale;
-	return (unsigned) scaled;
+	const float scaled = (float) (upper - lower) * scale;
+	return lower + (uint32_t) scaled;
 }
 #endif

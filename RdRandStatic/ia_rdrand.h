@@ -5,6 +5,9 @@
 // Twitter: @viathefalcon
 //
 
+#ifndef __IA_RAND_H__
+#define __IA_RAND_H__
+
 // Macros
 //
 
@@ -15,14 +18,21 @@
 #endif
 
 #ifndef RDRAND_API
-#define RDRAND_API
+#define RDRAND_API extern "C" 
 #endif
+
+// Invokes RDRAND to generate a unsigned random integer,
+// and bounds it uniformly to the range 0 <= value < bound.
+//
+// If no random value is available, returns the bound.
+#define rdrand_uniform(bound) rdrand_uniform_ex( 0, (bound) )
 
 // Types
 //
-typedef unsigned __int32 uint32_t, *uint32_ptr;
 
-extern "C" {
+typedef unsigned __int16 uint16_t;
+typedef unsigned __int32 uint32_t, *uint32_ptr;
+typedef unsigned __int64 uint64_t, *uint64_ptr;
 
 // Functions
 //
@@ -34,10 +44,18 @@ RDRAND_API bool RDRAND_CALLTYPE rdrand_supported(void);
 // Returns true if a random value was available; false otherwise
 RDRAND_API bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_ptr);
 
+#ifdef _WIN64
+// Invokes RDRAND to generate a 64-bit unsigned random number,
+// such that lower <= value < upper
+//
+// If no random value is available, returns the upper bound.
+RDRAND_API uint64_t RDRAND_CALLTYPE rdrand_uniform_ex(__in uint64_t, __in uint64_t);
+#else
 // Invokes RDRAND to generate a 32-bit unsigned random number,
 // and bounds it uniformly to the range 0 <= value < bound.
 //
 // If no random value is available, returns the bound.
-RDRAND_API unsigned RDRAND_CALLTYPE rdrand_uniform(__in unsigned);
+RDRAND_API uint32_t RDRAND_CALLTYPE rdrand_uniform_ex(__in uint32_t, __in uint32_t);
+#endif
 
-} // extern "C"
+#endif // __IA_RAND_H__

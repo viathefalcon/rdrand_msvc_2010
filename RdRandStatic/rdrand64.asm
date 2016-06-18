@@ -6,7 +6,7 @@
 ; Twitter: @viathefalcon
 ;
 
-PUBLIC rdrand_next, rdrand_uniform
+PUBLIC rdrand_next, rdrand_uniform_ex
 .CODE
 	ALIGN 8
 
@@ -26,51 +26,44 @@ rdrand_err:
 	ret					; Return with result in EAX
 rdrand_next ENDP
 
-rdrand_uniform PROC FRAME
-; unsigned rdrand_uniform(__in unsigned bound)
-; rcx = bound
-	push rbp
-	.pushreg rbp
-    sub rsp, 08h
-    .allocstack 08h
-	mov rbp, rsp
-	.setframe rbp, 0
+rdrand_uniform_ex PROC FRAME
+; uint64_t rdrand_uniform_ex(__in uint64_t lower, __in uint64_t upper)
+; rcx = lower (bound; inclusive)
+; rdx = upper (bound; exclusive)
 	.endprolog
 
-	db 00Fh, 0C7h, 0F0h		; Invoke RDRAND via its opcode [1], [2]
-	jc rdrand_ok
-	mov rax, rcx			; Set the result to be equal to the range to indicate the error
-	jmp epilogue
+	db 048h, 00Fh, 0C7h, 0F0h		; Invoke RDRAND via its opcode [2]
+	jnc epilogue
 
-rdrand_ok:
-	; Push the generated value onto the FPU stack (via the local call stack)
-	mov [rsp], rax
-	fild qword ptr [rsp]
+	; Get the range from which to select a number
+	sub rdx, rcx
+	dec rdx
 
-	; Push the denominator
-	mov rax, 0FFFFFFFFh		; The maximum value returnable by RDRAND (32-bit)
-	mov [rsp], rax
-	fild qword ptr [rsp]
-	fdivp					; Divide to obtain the scaling factor
+	; At this point, the random value is in RAX and the range in RDX;
+	; we regard the contents of RAX as the fractional part [3] of a 128-bit
+	; unsigned fixed point number (where the integer part is 0) and the
+	; contents of RDX as the integer part of a 128-bit fixed point number
+	; (where the fractional part is 0).
+	;
+	; Because the top and bottom 64 bits, respectively, of our would-be 128-bit
+	; inputs will always be zero we need only multiply the other 64 bits of each,
+	; to obtain the middle 128 bits of the product. Conveniently, we have a
+	; just the instruction for this..
+	mul rdx
 
-	; Multiply by the bound
-	dec rcx					; Decrement the bound such that the result never exceeds it
-							; (and to spare us faffing about with the rounding mode)
-	mov [rsp], rcx
-	fild qword ptr [rsp]
-	fmulp
-
-	; Get out the result
-	fistp dword ptr [rsp]
-	mov eax, dword ptr [rsp]
+	; The 128-bit fixed point product (integer:fraction) is given in RDX:RAX,
+	; and by discarding the latter, we effectively truncate, to give us a
+	; number n, 0 <= n < (upper - lower); adding lower gives us n, lower <= n < upper
+	add rdx, rcx
 
 epilogue:
-	add rsp, 08h
-	pop rbp
+	mov rax, rdx
 	ret
-rdrand_uniform ENDP
+
+rdrand_uniform_ex ENDP
 END
 
 ; [1] Because we don't specify a REX prefix, the instruction's output is 32-bit
 ; [2] The destination register is specified by the final (MOD R/M) byte:
 ;	  F0 = C0 | 30, C0 = Register addressed to EAX, c.f. http://www.c-jump.com/CIS77/CPU/x86/X77_0060_mod_reg_r_m_byte.htm
+; [3] x * 2^-64
