@@ -3,4 +3,3 @@ EXPORTS
  rdrand_supported @1
  rdrand_next @2
  rdrand_uniform_ex @3
- rdrand_uniform @4

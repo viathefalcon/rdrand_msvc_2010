@@ -103,26 +103,35 @@ bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_t* dest) {
 
 uint32_t RDRAND_CALLTYPE rdrand_uniform_ex(__in uint32_t lower, __in uint32_t upper) {
 
-	uint32_t value = 0, result = 0;
+	uint32_t v = lower, r = 0, b = (upper - 1 - lower);
 	__asm {
-		xor eax, eax		; Indicate to VC++ that we'll be using EAX
+		xor eax, eax			; Indicate to VC++ that we'll be using EAX
+		xor edx, edx			; and EDX
 
-		rdrand_eax			; Get the random value into EAX
-		jnc rdrand_ret		; No value available; jump over the next bit
+		rdrand_eax				; Get the random value into EAX
+		jnc rdrand_ret			; No value available; jump over the next bit
 
-		mov value, eax		; Move the random value from EAX into the destination address
-		mov result, 1		; Set the result (true)
+		; At this point, the random value is in EAX and the range in b;
+		; we regard the contents of EAX as the fractional part [3] of a 64-bit
+		; unsigned fixed point number (where the integer part is 0) and the
+		; contents of b as the integer part of a 64-bit fixed point number
+		; (where the fractional part is 0).
+		;
+		; Because the top and bottom 32 bits, respectively, of our would-be 64-bit
+		; inputs will always be zero we need only multiply the other 32 bits of each,
+		; to obtain the middle 64 bits of the product. Conveniently, we have 
+		; just the instruction for this..
+		mul b
+
+		; The 64-bit fixed point product (integer:fraction) is given in EDX:EAX,
+		; and by discarding the latter, we effectively truncate, to give us a
+		; number n, 0 <= n < (upper - lower); adding lower (in v) gives us n, lower <= n < upper
+		add v, edx
+		mov r, 1				; Set the result (true)
 
 	rdrand_ret:
 		; Fall out here
 	}
-
-	// Look for an early out
-	if (result == 0){
-		return upper;
-	}
-	const float scale = ((float) value) /  RDRAND_MAX_FLOAT;
-	const float scaled = (float) (upper - lower) * scale;
-	return lower + (uint32_t) scaled;
+	return (r == 0) ? upper : v;
 }
 #endif

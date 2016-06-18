@@ -32,3 +32,10 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 uint32_t RDRAND_CALLTYPE rdrand_uniform(uint32_t bound) {
 	return (uint32_t) rdrand_uniform_ex( 0, bound );
 }
+
+#ifndef _DEBUG
+// So as not to have to link with the Visual C++ runtime, we provide our own entry-point.
+extern "C" BOOL WINAPI _DllMainCRTStartup(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
+	return DllMain( hinstDLL, fdwReason, lpReserved );
+}
+#endif

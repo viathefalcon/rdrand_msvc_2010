@@ -47,7 +47,7 @@ rdrand_uniform_ex PROC FRAME
 	;
 	; Because the top and bottom 64 bits, respectively, of our would-be 128-bit
 	; inputs will always be zero we need only multiply the other 64 bits of each,
-	; to obtain the middle 128 bits of the product. Conveniently, we have a
+	; to obtain the middle 128 bits of the product. Conveniently, we have
 	; just the instruction for this..
 	mul rdx
 
