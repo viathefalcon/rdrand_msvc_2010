@@ -1,8 +1,7 @@
 // Stdafx.cpp: source file that includes just the standard includes; the corresponding .pch will be the pre-compiled header and stdafx.obj will contain the pre-compiled type information
 //
 // Author: Stephen Higgins
-// Blog: http://blog.viathefalcon.net/
-// Twitter: @viathefalcon
+// @viathefalcon
 //
 
 // Includes

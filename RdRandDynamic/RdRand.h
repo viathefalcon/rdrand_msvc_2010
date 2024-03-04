@@ -1,8 +1,7 @@
 // RdRand.h: Declares the interface to the functions in the DLL.
 //
 // Author: Stephen Higgins
-// Blog: http://blog.viathefalcon.net/
-// Twitter: @viathefalcon
+// @viathefalcon
 //
 
 // The following ifdef block is the standard way of creating macros which make exporting 

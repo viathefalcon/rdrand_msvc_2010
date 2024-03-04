@@ -2,8 +2,7 @@
 ; suitable for assembly with 64-bit MASM (ML64.EXE)
 ;
 ; Author: Stephen Higgins
-; Blog: http://blog.viathefalcon.net/
-; Twitter: @viathefalcon
+; @viathefalcon
 ;
 
 PUBLIC rdrand_next, rdrand_uniform_ex

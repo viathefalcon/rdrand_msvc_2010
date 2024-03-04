@@ -1,8 +1,7 @@
 // DLLMain.cpp : Defines the entry point for the DLL application.
 //
 // Author: Stephen Higgins
-// Blog: http://blog.viathefalcon.net/
-// Twitter: @viathefalcon
+// @viathefalcon
 //
 
 // Includes

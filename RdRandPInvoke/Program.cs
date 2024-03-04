@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
+/*
+ * Implicitly, this depends on the _32-bit_ edition of RdRandLib.dll [RdRandDynamic]
+ */
 namespace RdRandPInvoke
 {
     class Program

@@ -1,8 +1,7 @@
 // ia_rdrand.cpp: Implements the functions for working with the RDRAND instruction on (certain) Intel processors.
 //
 // Author: Stephen Higgins
-// Blog: http://blog.viathefalcon.net/
-// Twitter: @viathefalcon
+// @viathefalcon
 //
 
 // Includes
@@ -40,30 +39,32 @@
 //
 
 // Packs the four characters in the given buffer into an integer and compares with the comparand;
-// returns 0 if equal; 1 if not.
+// returns true if equal; false otherwise
 //
 // Could do this with memcmp, of course, but don't want to link in the C/C++ runtime.
-inline int packcmp(int comparand, __in_bcount(4) const char* buffer) {
+inline bool packcmp(int comparand, __in_bcount(4) const char* buffer) {
 
 	const int packed = *((int*) buffer);
-	return (packed == comparand) ? 0 : 1;
+	return (packed == comparand);
 }
 
 // Queries CPUID to see if the RDRAND instruction is supported
 bool rdrand_cpuid(void) {
 
-	// Check if we are on Intel hardware
+	// Check if we are on supported hardware
 	int info[4] = { -1, -1, -1, -1 };
 	__cpuid( info, 0 );
-	if (packcmp( info[1], "Genu" ) != 0 ||
-		packcmp( info[3], "ineI" ) != 0 ||
-		packcmp( info[2], "ntel" ) != 0 ){
-		return false;
+	if ((packcmp( info[1], "Genu" ) &&
+		packcmp( info[3], "ineI" ) &&
+		packcmp( info[2], "ntel" )) || 
+		(packcmp( info[1], "Auth" ) &&
+		packcmp( info[3], "enti" ) &&
+		packcmp( info[2], "cAMD" ))) {
+		// Query the feature itself
+		__cpuid( info, 1 );
+		return ((info[2] & RDRAND_MASK) == RDRAND_MASK); // info[2] == ecx
 	}
-
-	// Query the feature itself
-	__cpuid( info, 1 );
-	return ((info[2] & RDRAND_MASK) == RDRAND_MASK); // info[2] == ecx
+	return false;
 }
 
 bool RDRAND_CALLTYPE rdrand_supported(void) {

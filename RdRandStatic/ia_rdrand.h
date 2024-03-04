@@ -1,8 +1,7 @@
 // ia_rdrand.h: Declares the types and functions for working with the RDRAND instruction on (certain) Intel processors.
 //
 // Author: Stephen Higgins
-// Blog: http://blog.viathefalcon.net/
-// Twitter: @viathefalcon
+// @viathefalcon
 //
 
 #ifndef __IA_RAND_H__
