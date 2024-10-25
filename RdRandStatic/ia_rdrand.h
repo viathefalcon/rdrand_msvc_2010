@@ -1,4 +1,4 @@
-// ia_rdrand.h: Declares the types and functions for working with the RDRAND instruction on (certain) Intel processors.
+// ia_rdrand.h: Declares the types and functions for working with the RDRAND instruction on (certain) processors.
 //
 // Author: Stephen Higgins
 // @viathefalcon

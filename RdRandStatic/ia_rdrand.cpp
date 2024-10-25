@@ -1,4 +1,4 @@
-// ia_rdrand.cpp: Implements the functions for working with the RDRAND instruction on (certain) Intel processors.
+// ia_rdrand.cpp: Implements the functions for working with the RDRAND instruction on (certain) processors.
 //
 // Author: Stephen Higgins
 // @viathefalcon
@@ -16,12 +16,14 @@
 // Macros
 //
 
+#if !defined(_M_ARM64)
 // Defines the RDRAND instruction in terms of its opcode
 #define rdrand_eax	__asm _emit 0x0F __asm _emit 0xC7 __asm _emit 0xF0
 
 // Defines the bit mask used to examine the ecx register returned by cpuid.
 // (The 30th bit is set.)
 #define RDRAND_MASK	0x40000000
+#endif // !defined(_M_ARM64)
 
 // Defines the result returned when the RDRAND instruction is supported by the host hardware
 #define RDRAND_SUPPORTED 0
@@ -50,7 +52,7 @@ inline bool packcmp(int comparand, __in_bcount(4) const char* buffer) {
 
 // Queries CPUID to see if the RDRAND instruction is supported
 bool rdrand_cpuid(void) {
-
+#if !defined(_M_ARM64)
 	// Check if we are on supported hardware
 	int info[4] = { -1, -1, -1, -1 };
 	__cpuid( info, 0 );
@@ -64,6 +66,7 @@ bool rdrand_cpuid(void) {
 		__cpuid( info, 1 );
 		return ((info[2] & RDRAND_MASK) == RDRAND_MASK); // info[2] == ecx
 	}
+#endif // !defined(_M_ARM64)
 	return false;
 }
 
@@ -77,7 +80,18 @@ bool RDRAND_CALLTYPE rdrand_supported(void) {
 	return (supported == RDRAND_SUPPORTED);
 }
 
-#ifndef _WIN64
+#if defined (_WIN64)
+#if defined(_M_ARM64)
+_Success_(return == true)
+bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_ptr) {
+	return false;
+}
+
+uint64_t RDRAND_CALLTYPE rdrand_uniform_ex(__in uint64_t, __in uint64_t) {
+	return 0U;
+}
+#endif // !defined(_M_ARM64)
+#else
 bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_t* dest) {
 
 	__asm {
@@ -135,4 +149,4 @@ uint32_t RDRAND_CALLTYPE rdrand_uniform_ex(__in uint32_t lower, __in uint32_t up
 	}
 	return (r == 0) ? upper : v;
 }
-#endif
+#endif // defined (_WIN64)
