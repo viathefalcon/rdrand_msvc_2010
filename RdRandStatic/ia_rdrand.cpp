@@ -90,7 +90,7 @@ bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_ptr) {
 uint64_t RDRAND_CALLTYPE rdrand_uniform_ex(__in uint64_t, __in uint64_t) {
 	return 0U;
 }
-#endif // !defined(_M_ARM64)
+#endif // defined(_M_ARM64)
 #else
 bool RDRAND_CALLTYPE rdrand_next(__deref_out uint32_t* dest) {
 
